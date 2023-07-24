@@ -50,9 +50,9 @@ jobs:
       # Login into Salesforce using username and digital certificate key
       - name: Login into Salesforce using username and digital certificate key
         run: sf org login jwt --client-id ${{secrets.SF_SECRET_KEY_FOR_CLIENT_ID}} -o ${{secrets.SF_USERNAME}} --jwt-key-file ./server.key --instance-url https://test.salesforce.com
-      # # Deploy project into Salesforce ORG
-      # - name: Deploy project into Salesforce ORG
-      #   run: sf project deploy start -x force-app/main/default/package.xml -l RunSpecifiedTests -t $TESTCLASSES -o $SF_USERNAME
+      # Deploy project into Salesforce ORG
+      - name: Deploy project into Salesforce ORG
+        run: sf project deploy start -x force-app/main/default/package.xml -l NoTestRun -o ${{secrets.SF_USERNAME}}
       # Logout from Salesforce ORG
       - name: Logout from Salesforce ORG
         run: sf org logout -p -o ${{secrets.SF_USERNAME}}
