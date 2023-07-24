@@ -1,7 +1,9 @@
 FOLLOW THIS TUTORIAL: https://medium.com/slalom-technology/devops-in-salesforce-implementing-your-pipeline-ce540cb106e3
 
-In Github the file to config your pipeline or action is located at .github/workflows/blank.yml
+In Github the file to config your pipeline or action is located at ".github/workflows/blank.yml"
+
 Feel free to edit it as you need.
+
 Just set your repository secret variables like in BitBucket and it will work!
 
 Feel free to follow along with us as we implement a pipeline! Before you start, please ensure you have the following:
