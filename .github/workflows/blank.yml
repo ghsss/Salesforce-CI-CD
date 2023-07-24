@@ -47,8 +47,8 @@ jobs:
       # Decrypt encrypted file server key into "server.key" file
       - name: Set env variables
         run: |
-          export DECRYPTION_KEY=${{secrets.DECRYPTION_KEY}}
-          export DECRYPTION_IV=${{secrets.DECRYPTION_IV}}
+          export SF_USERNAME=${{secrets.SF_USERNAME}}
+          export SF_SECRET_KEY_FOR_CLIENT_ID=${{secrets.SF_SECRET_KEY_FOR_CLIENT_ID}}
       # Decrypt encrypted file server key into "server.key" file
       - name: Decrypt encrypted file server key into "server.key" file
         run: openssl enc -nosalt -aes-256-cbc -d -in ./server.key.enc -out ./server.key -base64 -K ${{secrets.DECRYPTION_KEY}} -iv ${{secrets.DECRYPTION_IV}}
