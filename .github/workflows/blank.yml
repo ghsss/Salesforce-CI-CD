@@ -45,8 +45,13 @@ jobs:
       - name: Verify Salesforce CLI tool version
         run: sf --version
       # Decrypt encrypted file server key into "server.key" file
+      - name: Set env variables
+        run: |
+          export DECRYPTION_KEY=${{secrets.DECRYPTION_KEY}}
+          export DECRYPTION_IV=${{secrets.DECRYPTION_IV}}
+      # Decrypt encrypted file server key into "server.key" file
       - name: Decrypt encrypted file server key into "server.key" file
-        run: openssl enc -nosalt -aes-256-cbc -d -in ./server.key.enc -out ./server.key -base64 -K $DECRYPTION_KEY -iv $DECRYPTION_IV
+        run: openssl enc -nosalt -aes-256-cbc -d -in ./server.key.enc -out ./server.key -base64 -K ${{secrets.DECRYPTION_KEY}} -iv ${{secrets.DECRYPTION_IV}}
       # Login into Salesforce using username and digital certificate key
       - name: Login into Salesforce using username and digital certificate key
         run: sf org login jwt --client-id $SF_SECRET_KEY_FOR_CLIENT_ID -o $SF_USERNAME --jwt-key-file ./server.key --instance-url https://test.salesforce.com
