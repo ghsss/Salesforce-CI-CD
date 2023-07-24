@@ -45,19 +45,14 @@ jobs:
       - name: Verify Salesforce CLI tool version
         run: sf --version
       # Decrypt encrypted file server key into "server.key" file
-      - name: Set env variables
-        run: |
-          export SF_USERNAME=${{secrets.SF_USERNAME}}
-          export SF_SECRET_KEY_FOR_CLIENT_ID=${{secrets.SF_SECRET_KEY_FOR_CLIENT_ID}}
-      # Decrypt encrypted file server key into "server.key" file
       - name: Decrypt encrypted file server key into "server.key" file
         run: openssl enc -nosalt -aes-256-cbc -d -in ./server.key.enc -out ./server.key -base64 -K ${{secrets.DECRYPTION_KEY}} -iv ${{secrets.DECRYPTION_IV}}
       # Login into Salesforce using username and digital certificate key
       - name: Login into Salesforce using username and digital certificate key
-        run: sf org login jwt --client-id $SF_SECRET_KEY_FOR_CLIENT_ID -o $SF_USERNAME --jwt-key-file ./server.key --instance-url https://test.salesforce.com
+        run: sf org login jwt --client-id ${{secrets.SF_SECRET_KEY_FOR_CLIENT_ID}} -o ${{secrets.SF_USERNAME}} --jwt-key-file ./server.key --instance-url https://test.salesforce.com
       # # Deploy project into Salesforce ORG
       # - name: Deploy project into Salesforce ORG
       #   run: sf project deploy start -x force-app/main/default/package.xml -l RunSpecifiedTests -t $TESTCLASSES -o $SF_USERNAME
       # Logout from Salesforce ORG
       - name: Logout from Salesforce ORG
-        run: sf org logout -p -o $SF_USERNAME
+        run: sf org logout -p -o ${{secrets.SF_USERNAME}}
